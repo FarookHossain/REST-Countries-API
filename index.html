@@ -37,8 +37,11 @@ xmlhttp.onreadystatechange = function() {
     document.getElementById("demo").innerHTML = cont;
   }
   function myFunction(obj){ var items = "";
-  for (let j in obj){  items = items + obj[j].name + ", "} return items;}
+  for (let j in obj){  items = items + obj[j].name + ", "} 
+  
+  return items.slice(0, items.length-2);}
 };
+
 xmlhttp.open("GET", "https://restcountries.eu/rest/v2/all", true);
 xmlhttp.send();
 </script>
