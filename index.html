@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<body>
+<style>
+table, th, td {border: 1px solid black;border-collapse: collapse;}
+th, td {padding: 5px;text-align: left;}
+img {width: 100%;}
+</style>
+
+<h2>Use the XMLHttpRequest to get the content of a file.</h2>
+<p>The content at <a href ="https://restcountries.eu/rest/v2/all">https://restcountries.eu/rest/v2/all</a> are written in inhuman readable format, and can easily be converted into a JavaScript object and can be displayed in HTML DOM.</p>
+
+<p>Take a look at <a href="https://restcountries.eu/rest/v2/all" target="_blank">REST_Countries</a></p>
+<p id="demo"></p>
+
+<script>
+var xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    var myObj = JSON.parse(this.responseText);
+    console.log(myObj);
+    var cont = "";
+    cont += "<table border='1'>"
+    cont += "<tr><th>Flag</th><th>Country Name</th><th>Capital</th><th>Population</th><th>Region</th><th>Currencies</th><th>Language</th><th>Time Zone</th></tr>"
+    for (i in myObj){
+    cont += "<tr><td><img src='" +
+    myObj[i].flag + "'></td><td>" + 
+    myObj[i].name + "</td><td>" + 
+    myObj[i].capital + "</td><td>" + 
+    myObj[i].population + "</td><td>" + 
+    myObj[i].region + "</td><td>" + 
+    myFunction(myObj[i].currencies) + "</td><td>" +
+    myFunction(myObj[i].languages) + "</td><td>" +
+    myObj[i].timezones + "</td></tr>"
+    }
+    cont += "</table>"
+    document.getElementById("demo").innerHTML = cont;
+  }
+  function myFunction(obj){ var items = "";
+  for (let j in obj){  items = items + obj[j].name + ", "} return items;}
+};
+xmlhttp.open("GET", "https://restcountries.eu/rest/v2/all", true);
+xmlhttp.send();
+</script>
+
+
+</body>
+</html>
